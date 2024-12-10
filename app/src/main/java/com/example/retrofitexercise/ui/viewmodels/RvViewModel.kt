@@ -39,11 +39,13 @@ class RvViewModel @Inject constructor(val rvRepo : RvRepository) : ViewModel() {
 //---------------------------------------------------------------------------------------------------
     // Post 10 10 Çekme yöntemi ile yapma
 
-     val response10Post :MutableLiveData<Resource<List<Post>>> = MutableLiveData()
-     private  var currentUserId = 1
-     var hasFirstPostSeen : Boolean =false
-     var isPagination :Boolean = false
-         private set
+    val response10Post :MutableLiveData<Resource<List<Post>>> = MutableLiveData()
+    private  var currentUserId = 1
+    var hasFirstPostSeen : Boolean =false
+    var isPagination :Boolean = false
+        private set
+    var isRefreshing :Boolean =false
+        private set
 
     var isLastPage :Boolean =false
     private val totalResults = 100 // totalResults normalde veri tababından alınır kaç veri olduğunu söyler buna göre işlem yaparız.
@@ -62,6 +64,7 @@ class RvViewModel @Inject constructor(val rvRepo : RvRepository) : ViewModel() {
             val response = rvRepo.get10Posts(userId)
             response10Post.postValue(handle10ListResponse(response))
             isPagination = false
+            isRefreshing = false
         }
     }
 
@@ -72,6 +75,14 @@ class RvViewModel @Inject constructor(val rvRepo : RvRepository) : ViewModel() {
             get10Post(currentUserId)
         }
 
+    }
+    fun refreshPosts(){
+        isRefreshing = true
+        currentUserId=1
+        hasFirstPostSeen=false
+        isPagination=false
+        isLastPage=false
+        get10Post(currentUserId)
     }
 
     private fun handle10ListResponse(response: Response<List<Post>>) : Resource<List<Post>> {

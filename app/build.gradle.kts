@@ -78,6 +78,10 @@ dependencies {
     //View Model APIs
     implementation(libs.androidx.fragment.ktx)
 
+    //swipe refresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+
+
 }
 // Allow references to generated code
 kapt {

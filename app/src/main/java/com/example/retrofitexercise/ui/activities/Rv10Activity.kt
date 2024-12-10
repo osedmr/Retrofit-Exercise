@@ -31,6 +31,19 @@ class Rv10Activity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+        //Swipe Refresh
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            postRecyclerViewAdapter.differ.submitList(emptyList())
+            rvViewModel.refreshPosts()
+        }
+
+
+
+
+
+
         binding.recyclerView.apply {
             postRecyclerViewAdapter = Rv10Adapter()
             adapter = postRecyclerViewAdapter
@@ -42,7 +55,7 @@ class Rv10Activity : AppCompatActivity() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    if (!recyclerView.canScrollVertically(1) && !rvViewModel.isLastPage){
+                    if (!recyclerView.canScrollVertically(1) && !rvViewModel.isLastPage && !rvViewModel.isRefreshing){
                         rvViewModel.loadMorePosts()
                     }
                 }
@@ -53,6 +66,7 @@ class Rv10Activity : AppCompatActivity() {
         rvViewModel.response10Post.observe(this, Observer { repo ->
             when(repo){
                 is Resource.Success -> {
+                    binding.swipeRefreshLayout.isRefreshing = false
                     hideProgressBar()
                     hidePaginationProgressBar()
                     repo.data?.let {postList ->
@@ -60,6 +74,7 @@ class Rv10Activity : AppCompatActivity() {
                     }
                 }
                 is Resource.Error ->{
+                    binding.swipeRefreshLayout.isRefreshing = false
                     hideProgressBar()
                     hidePaginationProgressBar()
                     repo.message?.let {error ->
@@ -67,9 +82,9 @@ class Rv10Activity : AppCompatActivity() {
                     }
                 }
                 is Resource.Loading -> {
-                    if (!rvViewModel.hasFirstPostSeen && !rvViewModel.isPagination){
+                    if (!rvViewModel.hasFirstPostSeen && !rvViewModel.isPagination && !rvViewModel.isRefreshing){
                          showProgressBar()
-                    }else{
+                    }else if (!rvViewModel.isRefreshing){
                          showPaginationProgressBar()
                     }
                 }
