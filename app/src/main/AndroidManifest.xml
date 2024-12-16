@@ -16,6 +16,9 @@
         android:theme="@style/Theme.RetrofitExercise"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.CoilActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.Rv10Activity"
             android:exported="false" />
         <activity

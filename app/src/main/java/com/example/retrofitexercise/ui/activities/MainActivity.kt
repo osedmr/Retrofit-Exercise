@@ -134,6 +134,9 @@ class MainActivity : AppCompatActivity() {
         binding.button4.setOnClickListener {
             startActivity(Intent(this, Rv10Activity::class.java))
         }
+        binding.button5.setOnClickListener {
+            startActivity(Intent(this, CoilActivity::class.java))
+        }
 
 
     }

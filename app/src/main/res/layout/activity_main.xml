@@ -97,8 +97,8 @@
         style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="82dp"
-        android:layout_marginEnd="109dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="140dp"
         android:text="go RvActivity"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,5 +114,15 @@
         android:text="go Rv10Activity"
         app:layout_constraintEnd_toEndOf="@+id/button3"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="19dp"
+        android:text="Coil Activity"
+        app:layout_constraintStart_toStartOf="@+id/button4"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
